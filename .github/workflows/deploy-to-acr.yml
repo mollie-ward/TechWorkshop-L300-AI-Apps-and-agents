@@ -16,6 +16,9 @@ concurrency:
 env:
   IMAGE_NAME: chat-app
 
+permissions:
+  contents: read
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
