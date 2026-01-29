@@ -2,16 +2,18 @@ name: Customer Loyalty Agent Execution
 
 on:
   push:
-    paths:
-      - 'src/app/agents/customerLoyaltyAgent_initializer.py'
-      - 'src/prompts/CustomerLoyaltyAgentPrompt.txt'
-      - 'src/app/tools/discountLogic.py'
-  pull_request:
+    branches:
+      - main
     paths:
       - 'src/app/agents/customerLoyaltyAgent_initializer.py'
       - 'src/prompts/CustomerLoyaltyAgentPrompt.txt'
       - 'src/app/tools/discountLogic.py'
   workflow_dispatch:
+
+# Ensure only one execution runs at a time
+concurrency:
+  group: customer-loyalty-agent-execution
+  cancel-in-progress: false
 
 permissions:
   contents: read
@@ -44,19 +46,11 @@ jobs:
         env:
           ENV: ${{ secrets.ENV }}
       
-      - name: Azure Login
-        uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-      
       - name: Execute Customer Loyalty Agent
         working-directory: ./src
         run: |
           python app/agents/customerLoyaltyAgent_initializer.py
-        env:
-          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        continue-on-error: false
       
       - name: Clean up .env file
         if: always()
