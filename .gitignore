@@ -54,6 +54,7 @@ out/
 *.azuredevops
 
 # Github
-.github/
+.github/*
+!.github/workflows/
 parameters.json
 .azure
