@@ -21,8 +21,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the code
 COPY . .
 
-# Copy .env file into the image (for python-dotenv)
-COPY .env .env
+# Note: .env file should be provided at runtime, not baked into the image
+# for security reasons. Use Docker secrets or environment variables at runtime.
 
 # Expose the port (default FastAPI/uvicorn port)
 EXPOSE 8000
