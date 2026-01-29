@@ -137,6 +137,7 @@ handoff_service = HandoffService(
     lazy_classification=True
 )
 
+
 @app.get("/")
 async def get():
     chat_html_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'chat.html')
