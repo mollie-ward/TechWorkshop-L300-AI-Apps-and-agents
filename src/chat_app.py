@@ -148,6 +148,7 @@ async def get():
 async def health_check():
     """Health check endpoint for Azure Web App."""
     return {
+        
         "status": "healthy",
         "timestamp": datetime.datetime.now().isoformat(),
         "environment_vars_configured": {
